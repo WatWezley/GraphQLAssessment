@@ -1,0 +1,22 @@
+schema {
+ query: Query
+}
+
+type Query{
+
+getAllCustomers : [Customer]
+loginCustomer(email: String, password: String) : Customer
+}
+
+type Mutation{
+	signUpCustomer(name: String,  email: String!, password: String
+            ):String
+}
+
+type Customer{
+id: String
+name: String
+email : String
+password : String
+
+}
