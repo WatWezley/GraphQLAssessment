@@ -33,14 +33,10 @@ public class GraphQlService {
     @Autowired
     private CustomerDataFetcher customerDataFetcher;
 
-    // load schema at application start up
+
     @PostConstruct
     private void loadSchema() throws IOException {
-
-
-        // get the schema
         File schemaFile = resource.getFile();
-        // parse schema
         TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaFile);
         RuntimeWiring wiring = buildRuntimeWiring();
         GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
@@ -51,10 +47,11 @@ public class GraphQlService {
 
     private RuntimeWiring buildRuntimeWiring() {
         return RuntimeWiring.newRuntimeWiring()
-                .type("Query", typeWiring -> typeWiring
-                        .dataFetcher("getAllCustomers", allCustomersDataFetcher)
-                        .dataFetcher("loginCustomer", customerDataFetcher))
+                .type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getAllCustomers", allCustomersDataFetcher))
+                .type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("loginCustomer", customerDataFetcher))
+                .type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("signUpCustomer", customerDataFetcher.registerCustomer()))
                 .build();
+
     }
 
 

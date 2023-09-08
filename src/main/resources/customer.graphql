@@ -1,16 +1,15 @@
 schema {
  query: Query
+ mutation: Mutation
 }
 
 type Query{
-
 getAllCustomers : [Customer]
 loginCustomer(email: String, password: String) : Customer
 }
 
 type Mutation{
-	signUpCustomer(name: String,  email: String!, password: String
-            ):String
+	signUpCustomer(name: String,  email: String!, password: String):Customer
 }
 
 type Customer{
