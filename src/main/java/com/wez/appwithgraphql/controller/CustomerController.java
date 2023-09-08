@@ -38,12 +38,8 @@ public class CustomerController {
 
 
     @PostMapping("/login")
-
     public ResponseEntity<Object> loginCustomer (@RequestBody String query) {
-        System.out.println("I AM RUNNING OH, WHATS THE PROBLEM");
-
         ExecutionResult execute = graphQlService.getGraphQL().execute(query);
-
         return new ResponseEntity<>(execute, HttpStatus.OK);
 
     }
